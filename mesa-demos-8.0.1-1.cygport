@@ -1,0 +1,9 @@
+DESCRIPTION="Mesa OpenGL demo applications"
+HOMEPAGE="http://www.mesa3d.org/"
+SRC_URI="ftp://ftp.freedesktop.org/pub/mesa/demos/${PV}/${P}.tar.bz2"
+PATCH_URI="8.0.1-as-needed.patch"
+
+src_install() {
+	cd ${B}
+	dobin src/xdemos/glx*.exe
+}
