@@ -1,0 +1,10 @@
+--- origsrc/demos/src/egl/opengles1/Makefile.am	2012-05-30 02:25:18.000000000 -0500
++++ src/demos/src/egl/opengles1/Makefile.am	2012-05-30 04:07:27.766367800 -0500
+@@ -43,7 +43,6 @@ noinst_PROGRAMS = \
+ 	clear \
+ 	drawtex_screen \
+ 	drawtex_x11 \
+-	eglfbdev \
+ 	es1_info \
+ 	gears_screen \
+ 	gears_x11 \
