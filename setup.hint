@@ -1,4 +1,4 @@
 category: X11
-requires: libEGL1 libGL1 libGLU1 libglut3 libOSMesa7 libX11_6
+requires: libEGL1 libGL1 libGLU1 libglut3 libOSMesa8 libX11_6
 sdesc: "OpenGL demos"
 ldesc: "OpenGL demos"
