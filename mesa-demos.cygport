@@ -1,9 +1,14 @@
-GIT_URI="git://anongit.freedesktop.org/mesa/demos"
-inherit git
+#GIT_URI="git://anongit.freedesktop.org/mesa/demos"
+#inherit git
 
-DESCRIPTION="Mesa OpenGL demo applications"
+NAME="mesa-demos"
+VERSION=8.1.0
+RELEASE=1
+CATEGORY="X11"
+SUMMARY="OpenGL demos"
+DESCRIPTION="OpenGL demos"
 HOMEPAGE="http://www.mesa3d.org/"
-#SRC_URI="http://cgit.freedesktop.org/mesa/demos/snapshot/${P}.tar.bz2"
+SRC_URI="http://cgit.freedesktop.org/mesa/demos/snapshot/${NAME}-${VERSION}.tar.bz2"
 PATCH_URI="20120509-as-needed.patch
            20120509-not-linux.patch"
 
@@ -14,7 +19,8 @@ DEPEND="pkgconfig(gl)
 	pkgconfig(vg)
 	pkgconfig(osmesa)
 	libglut-devel
-	mingw-gcc-core mingw-runtime mingw-w32api mingw-glew"
+	mingw64-${ARCH}-gcc-core
+	mingw64-${ARCH}-glew"
 
 src_compile() {
 	cd ${S}
@@ -24,8 +30,8 @@ src_compile() {
 	cygmake
 
 	cd ${B}/src/wgl
-	i686-pc-mingw32-gcc ${CFLAGS} -mwindows -o wglinfo.exe ${S}/src/wgl/wglinfo.c -lopengl32
-	i686-pc-mingw32-gcc ${CFLAGS} -mwindows -o wglthreads.exe ${S}/src/wgl/wglthreads.c -lopengl32
+	${ARCH}-w64-mingw32-gcc ${CFLAGS} -mwindows -o wglinfo.exe ${S}/src/wgl/wglinfo.c -lopengl32
+	${ARCH}-w64-mingw32-gcc ${CFLAGS} -mwindows -o wglthreads.exe ${S}/src/wgl/wglthreads.c -lopengl32
 }
 
 src_install() {
