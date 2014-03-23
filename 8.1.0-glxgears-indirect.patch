@@ -1,0 +1,68 @@
+glxgears: Smooth animation for indirect rendering
+
+Since commit 0b19fb0a5c6299baf28e26625e39773846f815b2 "improved animation rate"
+glxgears computes the amount to turn the gears each frame by multipling the
+angular velocity of the gears by the time since the last frame.  This gives a
+smooth animation with direct rendering, but is very bad for indirect rendering,
+since glXSwapBuffers does not block and we can queue many frames rapidly.
+
+The idiomatic way to deal with this seems to be to check for indirect rendering
+and force blocking until the swap is complete using glFinish().
+
+Signed-off-by: Jon TURNEY <jon.turney@dronecode.org.uk>
+---
+ src/xdemos/glxgears.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/src/xdemos/glxgears.c b/src/xdemos/glxgears.c
+index 7a3b567..fdd6179 100644
+--- a/src/xdemos/glxgears.c
++++ b/src/xdemos/glxgears.c
+@@ -315,7 +315,7 @@ draw_gears(void)
+ 
+ /** Draw single frame, do SwapBuffers, compute FPS */
+ static void
+-draw_frame(Display *dpy, Window win)
++draw_frame(Display *dpy, Window win, GLXContext ctx)
+ {
+    static int frames = 0;
+    static double tRot0 = -1.0, tRate0 = -1.0;
+@@ -336,6 +336,9 @@ draw_frame(Display *dpy, Window win)
+    draw_gears();
+    glXSwapBuffers(dpy, win);
+ 
++   if (!glXIsDirect(dpy, ctx))
++     glFinish(); /* if indirect, block until swap is complete */
++
+    frames++;
+    
+    if (tRate0 < 0.0)
+@@ -680,7 +683,7 @@ handle_event(Display *dpy, Window win, XEvent *event)
+ 
+ 
+ static void
+-event_loop(Display *dpy, Window win)
++event_loop(Display *dpy, Window win, GLXContext ctx)
+ {
+    while (1) {
+       int op;
+@@ -694,7 +697,7 @@ event_loop(Display *dpy, Window win)
+             break;
+       }
+ 
+-      draw_frame(dpy, win);
++      draw_frame(dpy, win, ctx);
+    }
+ }
+ 
+@@ -787,7 +790,7 @@ main(int argc, char *argv[])
+     */
+    reshape(winWidth, winHeight);
+ 
+-   event_loop(dpy, win);
++   event_loop(dpy, win, ctx);
+ 
+    glDeleteLists(gear1, 1);
+    glDeleteLists(gear2, 1);
+--
+1.8.3.4 
