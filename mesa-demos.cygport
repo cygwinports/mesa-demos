@@ -2,8 +2,8 @@
 #inherit git
 
 NAME="mesa-demos"
-VERSION=8.1.0
-RELEASE=2
+VERSION=8.2.0
+RELEASE=1
 CATEGORY="X11"
 SUMMARY="OpenGL demos"
 DESCRIPTION="OpenGL demos"
@@ -31,8 +31,8 @@ src_compile() {
 	cygmake
 
 	cd ${B}/src/wgl
-	${ARCH}-w64-mingw32-gcc ${CFLAGS} -mwindows -o wglinfo.exe ${S}/src/wgl/wglinfo.c -lopengl32
-	${ARCH}-w64-mingw32-gcc ${CFLAGS} -mwindows -o wglthreads.exe ${S}/src/wgl/wglthreads.c -lopengl32
+#	${ARCH}-w64-mingw32-gcc ${CFLAGS} -mwindows -o wglinfo.exe ${S}/src/wgl/wglinfo.c -lopengl32
+#	${ARCH}-w64-mingw32-gcc ${CFLAGS} -mwindows -o wglthreads.exe ${S}/src/wgl/wglthreads.c -lopengl32
 }
 
 src_install() {
@@ -42,5 +42,5 @@ src_install() {
 	dobin xdemos/glx*.exe
 #	dobin egl/opengl/eglinfo.exe egl/opengl/xegl*.exe
 #	dobin egl/opengles*/*info.exe
-	dobin wgl/wgl*.exe
+#	dobin wgl/wgl*.exe
 }
