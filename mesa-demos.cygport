@@ -19,9 +19,14 @@ DEPEND="pkgconfig(gl)
 	pkgconfig(glew)
 	pkgconfig(glu)
 	pkgconfig(osmesa)
+	pkgconfig(egl)
+	pkgconfig(glesv1_cm)
+	pkgconfig(glesv2)
+	pkgconfig(vg)
 	libglut-devel
-	mingw64-${ARCH}-gcc-core
-	mingw64-${ARCH}-glew"
+"
+#	mingw64-${ARCH}-gcc-core
+#	mingw64-${ARCH}-glew
 
 src_compile() {
 	cd ${S}
@@ -40,7 +45,7 @@ src_install() {
 	dobin demos/glinfo.exe
 	dobin osdemos/osdemo.exe
 	dobin xdemos/glx*.exe
-#	dobin egl/opengl/eglinfo.exe egl/opengl/xegl*.exe
-#	dobin egl/opengles*/*info.exe
+	dobin egl/opengl/eglinfo.exe egl/opengl/xegl*.exe
+	dobin egl/opengles*/*info.exe
 #	dobin wgl/wgl*.exe
 }
