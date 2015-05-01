@@ -1,0 +1,167 @@
+--- origsrc/mesa-demos-8.2.0/src/glsl/Makefile.am	2014-07-05 03:17:34.000000000 -0500
++++ src/mesa-demos-8.2.0/src/glsl/Makefile.am	2015-05-01 12:56:47.327268400 -0500
+@@ -118,7 +118,8 @@ vert_or_frag_only_LDADD = ../util/libuti
+ vert_tex_LDADD = ../util/libutil.la
+ vsraytrace_LDADD = ../util/libutil.la
+ 
+-EXTRA_DIST = \
++demosdatadir=$(datadir)/$(PACKAGE)/
++dist_demosdata_DATA= \
+ 	CH06-brick.frag \
+ 	CH06-brick.vert \
+ 	CH11-bumpmap.frag \
+@@ -128,15 +129,17 @@ EXTRA_DIST = \
+ 	CH18-mandel.frag \
+ 	CH18-mandel.vert \
+         bezier.geom \
+-	brick.shtest \
+ 	convolution.vert \
+ 	cubemap.frag \
+-	mandelbrot.shtest \
+ 	multitex.frag \
+-	multitex.shtest \
+ 	multitex.vert \
+ 	reflect.vert \
+ 	shadowtex.frag \
+ 	simple.vert \
+-	skinning.frag \
++	skinning.frag
++
++EXTRA_DIST = \
++	brick.shtest \
++	mandelbrot.shtest \
++	multitex.shtest \
+ 	toyball.shtest
+--- origsrc/mesa-demos-8.2.0/src/glsl/bezier.c	2014-07-05 03:17:34.000000000 -0500
++++ src/mesa-demos-8.2.0/src/glsl/bezier.c	2015-05-01 12:54:59.715103400 -0500
+@@ -13,7 +13,7 @@
+ #include "glut_wrap.h"
+ #include "shaderutil.h"
+ 
+-static const char *filename = "bezier.geom";
++static const char *filename = DEMOS_DATA_DIR "bezier.geom";
+ 
+ static GLuint fragShader;
+ static GLuint vertShader;
+--- origsrc/mesa-demos-8.2.0/src/glsl/blinking-teapot.c	2014-07-05 03:17:34.000000000 -0500
++++ src/mesa-demos-8.2.0/src/glsl/blinking-teapot.c	2015-05-01 12:45:29.402182800 -0500
+@@ -63,8 +63,8 @@ init_opengl (void)
+      exit(1);
+   }     
+ 
+-  vshad_id = CompileShaderFile (GL_VERTEX_SHADER, "blinking-teapot.vert");
+-  fshad_id = CompileShaderFile (GL_FRAGMENT_SHADER, "blinking-teapot.frag");
++  vshad_id = CompileShaderFile (GL_VERTEX_SHADER, DEMOS_DATA_DIR "blinking-teapot.vert");
++  fshad_id = CompileShaderFile (GL_FRAGMENT_SHADER, DEMOS_DATA_DIR "blinking-teapot.frag");
+   prog_id = LinkShaders (vshad_id, fshad_id);
+ 
+   UseProgram (prog_id);
+--- origsrc/mesa-demos-8.2.0/src/glsl/brick.c	2014-07-05 03:17:34.000000000 -0500
++++ src/mesa-demos-8.2.0/src/glsl/brick.c	2015-05-01 12:45:46.633871000 -0500
+@@ -14,8 +14,8 @@
+ #include "shaderutil.h"
+ 
+ 
+-static char *FragProgFile = "CH06-brick.frag";
+-static char *VertProgFile = "CH06-brick.vert";
++static char *FragProgFile = DEMOS_DATA_DIR "CH06-brick.frag";
++static char *VertProgFile = DEMOS_DATA_DIR "CH06-brick.vert";
+ 
+ /* program/shader objects */
+ static GLuint fragShader;
+--- origsrc/mesa-demos-8.2.0/src/glsl/bump.c	2014-07-05 03:17:34.000000000 -0500
++++ src/mesa-demos-8.2.0/src/glsl/bump.c	2015-05-01 12:49:25.800701600 -0500
+@@ -15,9 +15,9 @@
+ #include "readtex.h"
+ 
+ 
+-static char *FragProgFile = "CH11-bumpmap.frag";
+-static char *FragTexProgFile = "CH11-bumpmaptex.frag";
+-static char *VertProgFile = "CH11-bumpmap.vert";
++static char *FragProgFile = DEMOS_DATA_DIR "CH11-bumpmap.frag";
++static char *FragTexProgFile = DEMOS_DATA_DIR "CH11-bumpmaptex.frag";
++static char *VertProgFile = DEMOS_DATA_DIR "CH11-bumpmap.vert";
+ static char *TextureFile = DEMOS_DATA_DIR "tile.rgb";
+ 
+ /* program/shader objects */
+--- origsrc/mesa-demos-8.2.0/src/glsl/convolutions.c	2014-07-05 03:17:34.000000000 -0500
++++ src/mesa-demos-8.2.0/src/glsl/convolutions.c	2015-05-01 12:36:34.620274100 -0500
+@@ -340,7 +340,7 @@ static void init(void)
+ 
+    menuInit();
+    readTexture(textureLocation);
+-   createProgram("convolution.vert", "convolution.frag");
++   createProgram(DEMOS_DATA_DIR "convolution.vert", DEMOS_DATA_DIR "convolution.frag");
+ 
+    glEnable(GL_TEXTURE_2D);
+    glClearColor(1.0, 1.0, 1.0, 1.0);
+--- origsrc/mesa-demos-8.2.0/src/glsl/mandelbrot.c	2014-07-05 03:17:34.000000000 -0500
++++ src/mesa-demos-8.2.0/src/glsl/mandelbrot.c	2015-05-01 12:50:20.111598200 -0500
+@@ -14,8 +14,8 @@
+ #include "shaderutil.h"
+ 
+ 
+-static char *FragProgFile = "CH18-mandel.frag";
+-static char *VertProgFile = "CH18-mandel.vert";
++static char *FragProgFile = DEMOS_DATA_DIR "CH18-mandel.frag";
++static char *VertProgFile = DEMOS_DATA_DIR "CH18-mandel.vert";
+ 
+ /* program/shader objects */
+ static GLuint fragShader;
+--- origsrc/mesa-demos-8.2.0/src/glsl/multitex.c	2014-07-05 03:17:34.000000000 -0500
++++ src/mesa-demos-8.2.0/src/glsl/multitex.c	2015-05-01 12:50:42.712968200 -0500
+@@ -35,8 +35,8 @@
+ 
+ static const char *Demo = "multitex";
+ 
+-static const char *VertFile = "multitex.vert";
+-static const char *FragFile = "multitex.frag";
++static const char *VertFile = DEMOS_DATA_DIR "multitex.vert";
++static const char *FragFile = DEMOS_DATA_DIR "multitex.frag";
+ 
+ static const char *TexFiles[2] = 
+    {
+--- origsrc/mesa-demos-8.2.0/src/glsl/skinning.c	2014-07-05 03:17:34.000000000 -0500
++++ src/mesa-demos-8.2.0/src/glsl/skinning.c	2015-05-01 12:51:04.385720300 -0500
+@@ -20,8 +20,8 @@
+ #define M_PI 3.1415926535
+ #endif
+ 
+-static char *FragProgFile = "skinning.frag";
+-static char *VertProgFile = "skinning.vert";
++static char *FragProgFile = DEMOS_DATA_DIR "skinning.frag";
++static char *VertProgFile = DEMOS_DATA_DIR "skinning.vert";
+ 
+ /* program/shader objects */
+ static GLuint fragShader;
+--- origsrc/mesa-demos-8.2.0/src/glsl/texdemo1.c	2014-07-05 03:17:34.000000000 -0500
++++ src/mesa-demos-8.2.0/src/glsl/texdemo1.c	2015-05-01 12:51:18.961571200 -0500
+@@ -35,11 +35,11 @@
+ 
+ static const char *Demo = "texdemo1";
+ 
+-static const char *ReflectVertFile = "reflect.vert";
+-static const char *CubeFragFile = "cubemap.frag";
++static const char *ReflectVertFile = DEMOS_DATA_DIR "reflect.vert";
++static const char *CubeFragFile = DEMOS_DATA_DIR "cubemap.frag";
+ 
+-static const char *SimpleVertFile = "simple.vert";
+-static const char *SimpleTexFragFile = "shadowtex.frag";
++static const char *SimpleVertFile = DEMOS_DATA_DIR "simple.vert";
++static const char *SimpleTexFragFile = DEMOS_DATA_DIR "shadowtex.frag";
+ 
+ static const char *GroundImage = DEMOS_DATA_DIR "tile.rgb";
+ 
+--- origsrc/mesa-demos-8.2.0/src/glsl/toyball.c	2014-07-05 03:17:34.000000000 -0500
++++ src/mesa-demos-8.2.0/src/glsl/toyball.c	2015-05-01 12:54:05.465714600 -0500
+@@ -14,8 +14,8 @@
+ #include "shaderutil.h"
+ 
+ 
+-static char *FragProgFile = "CH11-toyball.frag";
+-static char *VertProgFile = "CH11-toyball.vert";
++static char *FragProgFile = DEMOS_DATA_DIR "CH11-toyball.frag";
++static char *VertProgFile = DEMOS_DATA_DIR "CH11-toyball.vert";
+ 
+ /* program/shader objects */
+ static GLuint fragShader;
