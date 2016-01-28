@@ -3,7 +3,8 @@ VERSION=8.3.0
 RELEASE=1
 CATEGORY="X11"
 SUMMARY="OpenGL demos"
-DESCRIPTION="OpenGL demos"
+DESCRIPTION="mesa-demos is a collection of demos and test programs for OpenGL,
+OpenGL ES, EGL, and OSMesa."
 HOMEPAGE="http://www.mesa3d.org/"
 SRC_URI="http://cgit.freedesktop.org/mesa/demos/snapshot/${NAME}-${VERSION}.tar.bz2"
 PATCH_URI="
