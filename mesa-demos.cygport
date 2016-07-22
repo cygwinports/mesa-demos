@@ -1,6 +1,6 @@
 NAME="mesa-demos"
 VERSION=8.3.0
-RELEASE=1
+RELEASE=2
 CATEGORY="X11"
 SUMMARY="OpenGL demos"
 DESCRIPTION="mesa-demos is a collection of demos and test programs for OpenGL,
@@ -11,7 +11,7 @@ PATCH_URI="
 	http://pkgs.fedoraproject.org/cgit/mesa-demos.git/plain/mesa-demos-8.0.1-legal.patch
 	8.1.0-glxgears-indirect.patch
 	8.3.0-egl-install.patch
-	8.2.0-glsl-system-data.patch
+	8.3.0-glsl-system-data.patch
 "
 
 DEPEND="pkgconfig(gl)
