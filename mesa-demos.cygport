@@ -1,12 +1,15 @@
+GIT_URI="git://anongit.freedesktop.org/mesa/demos"
+inherit git
+
 NAME="mesa-demos"
-VERSION=8.3.0
-RELEASE=2
+VERSION=8.4.0
+RELEASE=0.1.20171011git
 CATEGORY="X11"
 SUMMARY="OpenGL demos"
 DESCRIPTION="mesa-demos is a collection of demos and test programs for OpenGL,
 OpenGL ES, EGL, and OSMesa."
 HOMEPAGE="http://www.mesa3d.org/"
-SRC_URI="http://cgit.freedesktop.org/mesa/demos/snapshot/${NAME}-${VERSION}.tar.bz2"
+#SRC_URI="http://cgit.freedesktop.org/mesa/demos/snapshot/${NAME}-${VERSION}.tar.bz2"
 PATCH_URI="
 	http://pkgs.fedoraproject.org/cgit/mesa-demos.git/plain/mesa-demos-8.0.1-legal.patch
 	8.1.0-glxgears-indirect.patch
@@ -41,6 +44,9 @@ src_compile() {
 	      -o wglinfo.exe ${S}/src/wgl/wglinfo.c ${S}/src/xdemos/glinfo_common.c
 	dowgl -o wglthreads.exe ${S}/src/wgl/wglthreads.c
 	dowgl -o wglcontext.exe ${S}/src/wgl/wglcontext.c
+	dowgl -o wglfontbitmaps.exe ${S}/src/wgl/wglfontbitmaps.c
+	dowgl -o wglfontoutlines.exe ${S}/src/wgl/wglfontoutlines.c
+	dowgl -o wglgears.exe ${S}/src/wgl/wglgears.c
 	dowgl -o wgl_sharedtex_mt.exe ${S}/src/wgl/sharedtex_mt.c
 	dowgl -mwindows -o wincopy.exe ${S}/src/wgl/wglutil.c ${S}/src/wgl/wincopy.c
 }
@@ -53,7 +59,7 @@ src_install() {
 	doexe src/wgl/wgl*.exe
 
 	dodir /usr/bin
-	for x in {gl,glx,egl,es2_,wgl}info {glx,xegl}gears
+	for x in {gl,glx,egl,es2_,wgl}info {glx,xegl,wgl}gears
 	do
 		dosym ../lib/${NAME}/$x.exe /usr/bin/$x
 	done

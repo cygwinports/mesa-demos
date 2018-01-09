@@ -185,10 +185,10 @@
  static GLuint fragShader;
 --- origsrc/mesa-demos-8.3.0/src/perf/Makefile.am	2015-12-09 15:18:36.000000000 -0600
 +++ src/mesa-demos-8.3.0/src/perf/Makefile.am	2016-07-21 21:42:31.366634100 -0500
-@@ -57,3 +57,10 @@ bin_PROGRAMS = \
- endif
+@@ -59,3 +59,10 @@ bin_PROGRAMS = \
  
  glslstateschange_LDADD = libperf.la ../util/libutil.la
+ glsl_compile_time_LDADD = ../util/libutil.la
 +
 +demosdatadir = $(datadir)/$(PACKAGE)/
 +dist_demosdata_DATA = \
