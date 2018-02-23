@@ -1,9 +1,10 @@
 GIT_URI="git://anongit.freedesktop.org/mesa/demos"
+GIT_TAG=mesa-demos-${PV}
 inherit git
 
 NAME="mesa-demos"
 VERSION=8.4.0
-RELEASE=0.1.20171011git
+RELEASE=1
 CATEGORY="X11"
 SUMMARY="OpenGL demos"
 DESCRIPTION="mesa-demos is a collection of demos and test programs for OpenGL,
@@ -13,7 +14,7 @@ HOMEPAGE="http://www.mesa3d.org/"
 PATCH_URI="
 	http://pkgs.fedoraproject.org/cgit/mesa-demos.git/plain/mesa-demos-8.0.1-legal.patch
 	8.1.0-glxgears-indirect.patch
-	8.3.0-egl-install.patch
+	8.4.0-egl-install.patch
 	8.3.0-glsl-system-data.patch
 "
 
@@ -36,7 +37,7 @@ src_compile() {
 	cygmake
 
 	dowgl() {
-		${ARCH}-w64-mingw32-gcc ${CFLAGS} "${@}" -lopengl32 -lgdi32
+		${ARCH}-w64-mingw32-gcc -static ${CFLAGS} "${@}" -lopengl32 -lgdi32
 	}
 
 	cd ${B}/src/wgl
